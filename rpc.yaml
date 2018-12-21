@@ -1,0 +1,76 @@
+
+            
+
+
+execute:
+
+    # get to the page
+    - goto:   aulaweb.it/sviluppo_applicazioni_web
+    - click:  LoginButton
+    - wait:   1000
+    - click:  MenuButton
+    - wait:   0
+    
+    
+    # Scrape the content
+    - scrape: { results: [{ link: Link, name: Name }]  
+    
+    
+    # if scrape model has an array with object inside 
+    # with multiple Nodes as values, i have to scrape thes nodes concurrently:
+    # scraped one node i check the other type, checking if it is the right edge,
+    # if it is then i pack it in the object and continue with the next.
+    # another option would be:
+    # scrape: { links: [Link], names: [Name] }
+    # but this way i would loose the relation that names have with links
+    
+    
+    # scrape is done adding to the state of the reducer the scraped data
+    # at the last cycle the reducer returns the state and 
+    # doing so returns all the accumulated (and merged!) data
+    
+    # data is merged so if you go to differend pages with the same type of data you
+    # can scrape a clean object with all similar data in same keys,
+    # without having to insert keys like { page1: {...}, page2: {...} }
+
+
+
+
+
+
+
+nodes:
+
+    _SideBar:
+            scrape:     {}
+            where:      
+                        content:  /Menu/
+                        selector: div.menu
+                        
+    MenuButton:
+            scrape:     {}
+            where:
+                        selector: 'selector > a.class'
+                        edges:    { child_of: _SideBar,}
+                        content:  {{ data.menuNameToClick }}
+                        
+            
+    Link:
+            scrape:     { to: href, content: content }
+            transform:  str => str.trim()
+            where:
+                        selector: 'selector > a.class'
+                        edges:    { child_of: _Container, sibling_of: Name}
+                        content:  /regex/
+    Name:
+            scrape:     content
+            where:
+                        selector: 'selector > .bo'
+                        edges:    { sobling_of: Link } 
+                        # when i have sibling of i have to scrape 
+                        # with a stream of data
+                        href:     false
+    _Container:
+            model:      {}
+            where:      
+                        selector: .class
