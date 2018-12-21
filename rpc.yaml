@@ -2,7 +2,7 @@
             
 
 
-execute:
+reduce:
 
     # get to the page
     - goto:   aulaweb.it/sviluppo_applicazioni_web
@@ -11,9 +11,10 @@ execute:
     - click:  MenuButton
     - wait:   0
     
+    - scrape: { results: [{ name: Name, link: Link }] }
+                        
     
-    # Scrape the content
-    - scrape: { results: [{ link: Link, name: Name }]  
+
     
     
     # if scrape model has an array with object inside 
