@@ -2,7 +2,23 @@
             
 
 
-reduce:
+use:
+    - anti-captcha-psx:    { api_key:  'sdfsdfggfds' }
+    - scraper-psx:         { version:   1 }
+    - for-loop-psx:        { }
+    - chrome-emulator-psx: { }
+    
+    
+# with use yu cann add  plugins, plugins consist of more functionality added to the script
+# plugins are just npm packages that use some rules to integrate with psx
+# with anti-captcha you can resolve captchas,
+# with for-loop you can use loops inside the script
+# with scraper you can use scrape action
+# with chrome-emulator you can emulate the chrome browser
+
+emulate:      chrome
+
+actions:
 
     # get to the page
     - goto:   aulaweb.it/sviluppo_applicazioni_web
