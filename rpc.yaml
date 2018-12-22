@@ -52,7 +52,7 @@ nodes:
             scrape:     {}
             where:
                         selector: 'selector > a.class'
-                        edges:    { child_of: _SideBar,}
+                        edges:    { parent: _SideBar,}
                         content:  {{ data.menuNameToClick }}
                         
             
