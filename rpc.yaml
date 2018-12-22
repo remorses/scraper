@@ -61,16 +61,18 @@ nodes:
             transform:  str => str.trim()
             where:
                         selector: 'selector > a.class'
-                        edges:    { child_of: _Container, sibling_of: Name}
+                        edges:    { parent: _Container, sibling: Name}
                         content:  /regex/
     Name:
             scrape:     content
             where:
                         selector: 'selector > .bo'
-                        edges:    { sobling_of: Link } 
+                        edges:    { sibling: Link } 
                         # when i have sibling of i have to scrape 
                         # with a stream of data
                         href:     false
+                        attribute-custom: true
+                        id: id => id === '6687'
     _Container:
             model:      {}
             where:      
