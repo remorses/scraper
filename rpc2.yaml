@@ -1,18 +1,27 @@
 
+            
+
+
+use:
+    - anti-captcha-psx:    { api_key:  'sdfsdfggfds' }
+    - scraper-psx:         { version:   1 }
+    - for-loop-psx:        { mode: parallel }
+    # the actions inside the for loop will be executed concurrently
+    - chrome-emulator-psx: { }
 
 
 
-reduce:
+actions:
 
     # Scrape the content
     - for url in {{ data.results.urls }}:
-            - goto:   url
-            - wait:   0
-            - scrape: { results: [{ email: Email, name: Name }] }
-            
-            
-            
-            
+            - new_page:   url
+            - wait:       0
+            - scrape:     { results: [{ email: Email, name: Name }] }
+            - close_page: true
+
+
+
     # for loops are just keys that begins with /for /
     # the actions inside the for object will be executed for every element
     # of the list after the / in */
@@ -49,6 +58,7 @@ reduce:
 
 
 nodes:
+
     Email:
             scrape:     content
             where: 
