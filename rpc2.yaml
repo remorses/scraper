@@ -69,6 +69,6 @@ nodes:
             scrape:     content
             where:
                         selector: 'selector > .bo'
-                        edges:    { sobling_of: Link } 
+                        edges:    { sibling_of: Email } 
                         href:     false
                         
