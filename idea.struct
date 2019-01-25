@@ -1,0 +1,69 @@
+
+
+
+Obj:
+    key1: List (List String)
+    key2: Number
+    fun: (arg: String) -> Number
+
+InlineGen: Generator Number
+
+Module:
+    exportedRepeater: Number -> InlineGen
+
+TypeWithArgument arg:
+    list: [arg]
+    obj:  {Type: arg}
+
+TypeWithAny:
+    any: _
+    list: [_]
+    obj: {String: _}
+
+NestedObj:
+    obj:
+        key: String
+        address: String
+        smthing:
+            name: String
+            surname: String
+
+InterfaceExample:
+    key: String
+    num: Int
+
+Implementer:
+    ...InterfaceExample
+    key2: Boh
+
+# haskell data types must have arguments
+# because they are composed by the type nmae and
+# a function that creates them
+
+# in the case of same name
+HaskellType a:
+    | SomeType a 
+    | [a]
+    | {Symbol: a}
+
+HaskellType: a -> HaskellType a
+
+# if names are different constructor is a function
+contructor: a -> HaskellType a
+
+# implementation of haskell Eq class for HaskellType
+(=): 
+    | ...(=)    
+    | (HaskellType, HaskellType) -> Boolean
+    | (a:number, b:Number) -> Boolean
+
+# Rust traits
+SomeImpl a:
+    ...Iterator
+    map: (a -> b) -> SomeImpl b
+    next: () -> a
+
+# for projects that use lower case types use aliases
+someType: SomeType
+
+
